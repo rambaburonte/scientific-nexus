@@ -60,10 +60,10 @@ const HeroSection = () => {
           className="mt-20 flex justify-center gap-12 md:gap-20 text-center"
         >
           {[
-            { value: "500+", label: "Conferences" },
-            { value: "120+", label: "Countries" },
-            { value: "50K+", label: "Delegates" },
-            { value: "10K+", label: "Speakers" },
+            { value: "15+", label: "Conferences" },
+            { value: "60+", label: "Countries" },
+            { value: "80+", label: "Delegates" },
+            { value: "100+", label: "Speakers" },
           ].map((stat) => (
             <div key={stat.label}>
               <div className="text-2xl md:text-3xl font-display font-bold text-gradient-gold">{stat.value}</div>

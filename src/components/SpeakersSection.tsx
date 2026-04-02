@@ -2,15 +2,15 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 
 const speakers = [
-  { name: "Dr. Sarah Chen", role: "AI & Healthcare", org: "MIT" },
-  { name: "Prof. James Mitchell", role: "Quantum Computing", org: "Oxford University" },
-  { name: "Dr. Amara Osei", role: "Genomics Research", org: "WHO" },
-  { name: "Prof. Kenji Tanaka", role: "Robotics Engineering", org: "University of Tokyo" },
+  // { name: "Dr. Sarah Chen", role: "AI & Healthcare", org: "MIT" },
+  // { name: "Prof. James Mitchell", role: "Quantum Computing", org: "Oxford University" },
+  // { name: "Dr. Amara Osei", role: "Genomics Research", org: "WHO" },
+  // { name: "Prof. Kenji Tanaka", role: "Robotics Engineering", org: "University of Tokyo" },
 ];
 
 const partners = [
   "World Health Organization", "IEEE", "Nature Publishing", "Springer",
-  "Elsevier", "MIT", "Stanford University", "Oxford University",
+  "Elsevier", "Simon Fraser University", "Hochschule Karlsruhe", "University of Zurich", "ETH Zurich", "Tsinghua University" ,"University of Toronto", "National University of Singapore", "University of Lagos", "University of Buenos Aires",  "Cambridge University" , "Sunway University"
 ];
 
 const SpeakersSection = () => {
@@ -27,9 +27,9 @@ const SpeakersSection = () => {
           className="text-center mb-16"
         >
           <span className="text-sm font-semibold tracking-[0.2em] uppercase text-gradient-teal">Our Network</span>
-          <h2 className="font-display text-3xl md:text-5xl font-bold mt-4 mb-6">
+          {/* <h2 className="font-display text-3xl md:text-5xl font-bold mt-4 mb-6">
             Featured <span className="text-gradient-gold">Speakers</span>
-          </h2>
+          </h2> */}
         </motion.div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-20">

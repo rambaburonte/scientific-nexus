@@ -12,6 +12,7 @@ const ContactSection = () => {
     setForm({ name: "", email: "", subject: "", message: "" });
   };
 
+
   return (
     <section id="contact" className="section-padding" ref={ref}>
       <div className="container mx-auto max-w-6xl">
@@ -29,7 +30,6 @@ const ContactSection = () => {
             Have questions about our conferences or interested in partnership opportunities? We'd love to hear from you.
           </p>
         </motion.div>
-
         <div className="grid lg:grid-cols-5 gap-8">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
@@ -38,9 +38,7 @@ const ContactSection = () => {
             className="lg:col-span-2 space-y-6"
           >
             {[
-              { icon: Mail, label: "Email Us", value: "info@scientificalerts.com" },
-              { icon: Phone, label: "Call Us", value: "+1 (555) 234-5678" },
-              { icon: MapPin, label: "Visit Us", value: "350 Fifth Avenue, Suite 4800\nNew York, NY 10118" },
+              { icon: Mail, label: "Email Us", value: "contact@scientificalerts.com" }
             ].map((item) => (
               <div key={item.label} className="glass rounded-xl p-6 flex items-start gap-4 hover-lift">
                 <div className="w-12 h-12 rounded-xl gradient-gold flex items-center justify-center flex-shrink-0">
@@ -52,19 +50,7 @@ const ContactSection = () => {
                 </div>
               </div>
             ))}
-
-            <div className="glass rounded-xl overflow-hidden h-48">
-              <iframe
-                title="Office Location"
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.1841902375305!2d-73.98784368459!3d40.74844097932847!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c259a9b3117469%3A0xd134e199a405a163!2sEmpire+State+Building!5e0!3m2!1sen!2sus!4v1"
-                width="100%"
-                height="100%"
-                style={{ border: 0, filter: "invert(0.9) hue-rotate(180deg)" }}
-                loading="lazy"
-              />
-            </div>
           </motion.div>
-
           <motion.form
             onSubmit={handleSubmit}
             initial={{ opacity: 0, x: 30 }}
@@ -129,6 +115,5 @@ const ContactSection = () => {
       </div>
     </section>
   );
-};
-
+}
 export default ContactSection;

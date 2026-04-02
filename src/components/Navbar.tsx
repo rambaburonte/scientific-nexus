@@ -1,20 +1,22 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
 
 const navLinks = [
-  { label: "About", href: "#about" },
-  { label: "Conferences", href: "#conferences" },
-  { label: "Services", href: "#services" },
-  { label: "Speakers", href: "#speakers" },
-  { label: "Testimonials", href: "#testimonials" },
-  { label: "Gallery", href: "#gallery" },
-  { label: "Contact", href: "#contact" },
+  { label: "About", href: "/about" },
+  { label: "Conferences", href: "/conferences" },
+  { label: "Services", href: "/services" },
+  // { label: "Speakers", href: "/speakers" },
+  { label: "Testimonials", href: "/testimonials" },
+  { label: "Gallery", href: "/gallery" },
+  { label: "Contact", href: "/contact" },
 ];
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);
@@ -22,10 +24,7 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const handleClick = (href: string) => {
-    setMobileOpen(false);
-    document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
-  };
+  const handleNav = () => setMobileOpen(false);
 
   return (
     <motion.nav
@@ -37,26 +36,28 @@ const Navbar = () => {
       }`}
     >
       <div className="container mx-auto flex items-center justify-between h-20 px-4 md:px-8">
-        <button onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} className="flex items-center gap-2">
+        <Link to="/" className="flex items-center gap-2">
           <span className="text-gradient-gold font-display text-xl font-bold tracking-tight">Scientific Alerts</span>
-        </button>
+        </Link>
 
         <div className="hidden lg:flex items-center gap-8">
           {navLinks.map((link) => (
-            <button
+            <Link
               key={link.href}
-              onClick={() => handleClick(link.href)}
-              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-200 relative after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-primary after:transition-all after:duration-300 hover:after:w-full"
+              to={link.href}
+              onClick={handleNav}
+              className={`text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-200 relative after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-primary after:transition-all after:duration-300 hover:after:w-full ${location.pathname === link.href ? "text-primary" : ""}`}
             >
               {link.label}
-            </button>
+            </Link>
           ))}
-          <button
-            onClick={() => handleClick("#contact")}
+          <Link
+            to="/contact"
+            onClick={handleNav}
             className="gradient-gold text-primary-foreground px-5 py-2 rounded-lg text-sm font-semibold hover:opacity-90 transition-opacity"
           >
             Get in Touch
-          </button>
+          </Link>
         </div>
 
         <button className="lg:hidden text-foreground" onClick={() => setMobileOpen(!mobileOpen)}>

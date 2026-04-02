@@ -5,12 +5,12 @@ import { Calendar, MapPin, ArrowRight } from "lucide-react";
 const categories = ["All", "Medical", "Engineering", "Life Sciences", "Technology"];
 
 const conferences = [
-  { title: "International Summit on AI & Healthcare", date: "Aug 15–17, 2026", location: "Singapore", category: "Medical", status: "upcoming" },
-  { title: "Global Engineering Innovation Forum", date: "Sep 5–7, 2026", location: "Berlin, Germany", category: "Engineering", status: "upcoming" },
-  { title: "World Congress on Genomics", date: "Oct 12–14, 2026", location: "Boston, USA", category: "Life Sciences", status: "upcoming" },
-  { title: "Future Tech & Data Science Summit", date: "Nov 3–5, 2026", location: "Tokyo, Japan", category: "Technology", status: "upcoming" },
-  { title: "European Cardiology Conference", date: "Jun 20–22, 2026", location: "Vienna, Austria", category: "Medical", status: "upcoming" },
-  { title: "Sustainable Engineering World Forum", date: "Dec 8–10, 2026", location: "Dubai, UAE", category: "Engineering", status: "upcoming" },
+  { title: "World Scientific Summit on Renewable and Sustainable Energy (WSSRSE-2026)", date: "Nov 23–25, 2026", location: "Berlin, Germany", category: "Engineering", status: "upcoming" },
+  // Added from user request
+  { title: "GLOBAL VIRTUAL SUMMIT ON RENEWABLE ENERGY AND SUSTAINABLE ENERGY", date: "July 15-16, 2026", location: "Webinar", category: "Engineering", status: "upcoming" },
+  { title: "GLOBAL VIRTUAL SUMMIT ON FOOD INNOVATION AND NUTRITIONAL SCIENCE", date: "July 16-17, 2026", location: "Webinar", category: "Life Sciences", status: "upcoming" },
+  { title: "GLOBAL VIRTUAL SUMMIT ON POWER ENERGY AND ENERGY ENGINEERING", date: "July 15-16, 2026", location: "Webinar", category: "Engineering", status: "upcoming" },
+  { title: "GLOBAL VIRTUAL SUMMIT ON MATERIAL SCIENCE AND NANOTECHNOLOGY", date: "July 18-19, 2026", location: "Webinar", category: "Technology", status: "upcoming" },
 ];
 
 const ConferencesSection = () => {
