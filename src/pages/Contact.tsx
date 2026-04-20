@@ -1,13 +1,28 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Send } from "lucide-react";
+import { sendContactEmail } from "@/lib/brevo";
 
 const ContactPage = () => {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitMessage, setSubmitMessage] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setForm({ name: "", email: "", message: "" });
+    setIsSubmitting(true);
+    setSubmitMessage("");
+
+    try {
+      await sendContactEmail(form);
+      setSubmitMessage("Thank you for your message! We'll get back to you soon.");
+      setForm({ name: "", email: "", message: "" });
+    } catch (error) {
+      setSubmitMessage("Failed to send message. Please try again or contact us directly.");
+      console.error("Contact form submission error:", error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -28,7 +43,7 @@ const ContactPage = () => {
             <a href="mailto:contact@scientificalerts.com" className="text-primary underline">
               contact@scientificalerts.com
             </a>
-            .
+            . Our office is located at 124PT NO, 209 Sanjaya Main Road, HYDERABAD TELANGANA-500081.
           </p>
         </motion.div>
 
@@ -73,11 +88,17 @@ const ContactPage = () => {
                 required
               />
             </div>
+            {submitMessage && (
+              <div className={`p-4 rounded-lg text-sm ${submitMessage.includes('Thank you') ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+                {submitMessage}
+              </div>
+            )}
             <button
               type="submit"
-              className="gradient-gold text-primary-foreground px-8 py-3 rounded-lg text-sm font-semibold shadow-gold hover:opacity-90 transition-all flex items-center gap-2 w-full justify-center"
+              disabled={isSubmitting}
+              className="gradient-gold text-primary-foreground px-8 py-3 rounded-lg text-sm font-semibold shadow-gold hover:opacity-90 transition-all flex items-center gap-2 w-full justify-center disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Send Message <Send className="w-4 h-4" />
+              {isSubmitting ? "Sending..." : "Send Message"} <Send className="w-4 h-4" />
             </button>
           </div>
         </motion.form>

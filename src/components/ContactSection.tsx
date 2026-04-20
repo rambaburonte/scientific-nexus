@@ -1,15 +1,30 @@
 import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
 import { Mail, Phone, MapPin, Send } from "lucide-react";
+import { sendContactEmail } from "@/lib/brevo";
 
 const ContactSection = () => {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-100px" });
   const [form, setForm] = useState({ name: "", email: "", subject: "", message: "" });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitMessage, setSubmitMessage] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setForm({ name: "", email: "", subject: "", message: "" });
+    setIsSubmitting(true);
+    setSubmitMessage("");
+
+    try {
+      await sendContactEmail(form);
+      setSubmitMessage("Thank you for your message! We'll get back to you soon.");
+      setForm({ name: "", email: "", subject: "", message: "" });
+    } catch (error) {
+      setSubmitMessage("Failed to send message. Please try again or contact us directly.");
+      console.error("Contact form submission error:", error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
 
@@ -38,7 +53,8 @@ const ContactSection = () => {
             className="lg:col-span-2 space-y-6"
           >
             {[
-              { icon: Mail, label: "Email Us", value: "contact@scientificalerts.com" }
+              { icon: Mail, label: "Email Us", value: "contact@scientificalerts.com" },
+              { icon: MapPin, label: "Address", value: "124PT NO, 209 Sanjaya Main Road,\nHYDERABAD TELANGANA-500081" }
             ].map((item) => (
               <div key={item.label} className="glass rounded-xl p-6 flex items-start gap-4 hover-lift">
                 <div className="w-12 h-12 rounded-xl gradient-gold flex items-center justify-center flex-shrink-0">
@@ -104,11 +120,17 @@ const ContactSection = () => {
                 required
               />
             </div>
+            {submitMessage && (
+              <div className={`mb-6 p-4 rounded-lg text-sm ${submitMessage.includes('Thank you') ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+                {submitMessage}
+              </div>
+            )}
             <button
               type="submit"
-              className="gradient-gold text-primary-foreground px-8 py-3 rounded-lg text-sm font-semibold shadow-gold hover:opacity-90 transition-all flex items-center gap-2"
+              disabled={isSubmitting}
+              className="gradient-gold text-primary-foreground px-8 py-3 rounded-lg text-sm font-semibold shadow-gold hover:opacity-90 transition-all flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Send Message <Send className="w-4 h-4" />
+              {isSubmitting ? "Sending..." : "Send Message"} <Send className="w-4 h-4" />
             </button>
           </motion.form>
         </div>

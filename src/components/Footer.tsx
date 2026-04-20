@@ -1,4 +1,6 @@
 import { Mail, Phone, MapPin } from "lucide-react";
+import { useState } from "react";
+import { sendSubscribeEmail } from "@/lib/brevo";
 
 const footerLinks = {
   "Quick Links": ["About Us", "Conferences", "Services", "Gallery", "Contact"],
@@ -14,6 +16,29 @@ const socialLinks = [
 ];
 
 const Footer = () => {
+  const [subscribeEmail, setSubscribeEmail] = useState("");
+  const [isSubscribing, setIsSubscribing] = useState(false);
+  const [subscribeMessage, setSubscribeMessage] = useState("");
+
+  const handleSubscribe = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!subscribeEmail) return;
+
+    setIsSubscribing(true);
+    setSubscribeMessage("");
+
+    try {
+      await sendSubscribeEmail(subscribeEmail);
+      setSubscribeMessage("Thank you for subscribing! You'll receive our latest updates.");
+      setSubscribeEmail("");
+    } catch (error) {
+      setSubscribeMessage("Failed to subscribe. Please try again.");
+      console.error("Subscribe error:", error);
+    } finally {
+      setIsSubscribing(false);
+    }
+  };
+
   return (
     <footer className="border-t border-border bg-secondary/20">
       <div className="container mx-auto max-w-6xl px-4 md:px-8 py-16">
@@ -35,6 +60,31 @@ const Footer = () => {
                   {s.label[0]}
                 </a>
               ))}
+            </div>
+            <div className="mt-8">
+              <h4 className="font-display font-semibold mb-4">Stay Updated</h4>
+              <form onSubmit={handleSubscribe} className="flex gap-2">
+                <input
+                  type="email"
+                  value={subscribeEmail}
+                  onChange={(e) => setSubscribeEmail(e.target.value)}
+                  placeholder="Enter your email"
+                  className="flex-1 bg-secondary/50 border border-border rounded-lg px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-shadow"
+                  required
+                />
+                <button
+                  type="submit"
+                  disabled={isSubscribing}
+                  className="gradient-gold text-primary-foreground px-4 py-2 rounded-lg text-sm font-semibold shadow-gold hover:opacity-90 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {isSubscribing ? "..." : "Subscribe"}
+                </button>
+              </form>
+              {subscribeMessage && (
+                <p className={`text-xs mt-2 ${subscribeMessage.includes('Thank you') ? 'text-green-600' : 'text-red-600'}`}>
+                  {subscribeMessage}
+                </p>
+              )}
             </div>
           </div>
 
